@@ -15,19 +15,19 @@ const CheckOut = ()=>{
             <form >
           <div className="form-group">
             <label for="exampleFormControlInput1">Name:</label>
-            <input type="text" class="form-control" id="exampleFormControlInput1" required />
+            <input type="text" class="form-control" id="exampleFormControlInput1"  />
           </div> 
           <div className="form-group">
             <label for="exampleFormControlInput4">Address:</label>
-            <input type="text" class="form-control" id="exampleFormControlInput4" required />
+            <input type="text" class="form-control" id="exampleFormControlInput4"  />
           </div> 
           <div className="form-group">
             <label for="exampleFormControlInput2">phone</label>
-            <input type="text" class="form-control" id="exampleFormControlInput2" required />
+            <input type="text" class="form-control" id="exampleFormControlInput2"  />
           </div> 
             <div className="form-group">
             <label for="exampleFormControlInput3">Email address</label>
-            <input type="email" class="form-control" id="exampleFormControlInput3" required />
+            <input type="email" class="form-control" id="exampleFormControlInput3"  />
           </div> 
           <div className="form-group">
     <label for="exampleFormControlTextarea5">Notes</label>
