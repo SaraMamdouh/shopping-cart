@@ -1,0 +1,22 @@
+.filter .filter-list{
+    display: block;
+    list-style: none;
+    text-align: center!important;
+    padding: 0;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 50px;
+}
+
+
+.filter .filter-list .filter-link{
+    display: inline-block;
+    font-size: 24px;
+    padding-right: 2rem;
+    font-weight: 700;
+    transition: all 0.25s ease-in-out;
+}
+.filter .filter-list .filter-link:hover{
+cursor: pointer;
+color: #c14679;
+}

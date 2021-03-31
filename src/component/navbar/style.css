@@ -1,0 +1,39 @@
+.desert-navbar{
+    background:  #e5e5ee;;
+    text-align: left!important;
+    height: 90px;
+}
+.desert-navbar .logo{
+    margin-left: 70px;
+    padding-top: 15px;
+    display: inline-block;
+}
+
+.desert-navbar .logo .desert-logo{
+    width:250px;
+    height: 60px;
+}
+
+.desert-navbar .cart{
+    position: relative;
+    padding-top: 35px;
+    padding-right: 100px;
+    font-size: 32px;
+    color: #c14679;
+    margin-bottom: 50px;
+}
+.desert-navbar .cart:hover .fa-shopping-cart::before{
+    transition: all 0.3s ease-in-out;
+
+}
+.desert-navbar .cart:hover .fa-shopping-cart::before{
+    cursor: pointer;
+text-shadow: 0px 2px 15px #f196bc;
+}
+.desert-navbar .number-of-items{
+        font-size: 20px;
+    font-weight: 700;
+    position: absolute;
+    right: 28px;
+    top: 6px;
+}
