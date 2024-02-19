@@ -1,14 +1,13 @@
-import './App.css';
-import Product from './component/products/product';
-import { Provider } from 'react-redux';
-import store from './../src/redux/store';
+import "./App.css";
+import { Provider } from "react-redux";
+import store from "./../src/redux/store";
+import { RouterProvider } from "react-router-dom";
+import { router } from "./navigation/routes";
 
 function App() {
   return (
     <Provider store={store}>
-    <div className="App">
-    <Product/>
-    </div>
+      <RouterProvider router={router} />
     </Provider>
   );
 }

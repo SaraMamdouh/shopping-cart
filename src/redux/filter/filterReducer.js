@@ -1,45 +1,31 @@
-import {
-  DECREASE_COUNT,
-    FILTER,INCREASE_COUNT
-} from './filterType';
-  
-  const initialState = {
-    filter: [],
+import { SET_FILTER, SET_IS_FILTER_CHANGED } from "./filterType";
+
+const initialState = {
+  filters: {
+    searchText: "",
+    category: "",
+    shopId: "",
+    page: 1,
+  },
+  isFilterChanged: true,
+};
+
+const FilterReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case SET_FILTER:
+      return {
+        ...state,
+        filters: { ...state.filters, ...action.filters },
+        isFilterChanged: true,
+      };
+    case SET_IS_FILTER_CHANGED:
+      return {
+        ...state,
+        isFilterChanged: false,
+      };
+    default:
+      return state;
   }
-  
-  const FilterReducer = (state = initialState, action) => {
-    switch (action.type) {
-      case FILTER:
-        return {
-          ...state,
-          filter: action.payload
-        }
-        case INCREASE_COUNT:
-          return {
-            ...state,
-            filter: state.filter.map(item => {
-              if(item.id === action.payload ) {
-                 return { ...item, count: item.count + 1}
-              }
-              return item;
-            })
-          }
-        
-         case DECREASE_COUNT:
-          return {
-            ...state,
-            filter: state.filter.map(item => {
-              if(item.id === action.payload && action.count>0) {
-                 return { ...item, count: item.count - 1}
-              }
-              else{
-                return{...item,count:item.count}
-              }
-                 })
-         }
-      default:
-         return state
-    }
-  }
-  
-  export default FilterReducer
+};
+
+export default FilterReducer;

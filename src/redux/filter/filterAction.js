@@ -1,46 +1,14 @@
-import {
-    FILTER,INCREASE_COUNT,DECREASE_COUNT
-}from './filterType';
+import { SET_FILTER, SET_IS_FILTER_CHANGED } from "./filterType";
 
-export const FilterList =(id)=>{
-    return{
-        type:FILTER,
-        payload:id
-    }
-}
-export const IncreaseCount = (id,count)=>{
-    return {
-      type:INCREASE_COUNT,
-      payload:id,
-      count:count
-    }
-  }
-  export const DecreseCount = (id,count)=>{
-    return {
-      type:DECREASE_COUNT,
-      payload:id,
-      count:count
-    }
-  }
-export const FilterData = (filter,data) => {
-    return (dispatch) => {
-    switch (filter){
-        case "SHOW_ALL":
-        dispatch(FilterList(data))
-        break;
-        case "SHOW_CAKES":
-        const cake=data.filter(m=>m.category==="cake")
-         dispatch(FilterList(cake))
-         break;
-         case "SHOW_BISCUITS":
-            const biscuits=data.filter(m=>m.category==="buscuits")
-            dispatch(FilterList(biscuits))
-            break;
-            default:
-                dispatch(FilterList(data))
- 
+export const setFilters = (filters) => {
+  return {
+    type: SET_FILTER,
+    filters,
+  };
+};
 
-        }
-    }
-        
-  }
+export const setIsFiltersChanged = () => {
+  return {
+    type: SET_IS_FILTER_CHANGED,
+  };
+};
