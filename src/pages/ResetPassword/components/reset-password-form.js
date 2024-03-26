@@ -1,83 +1,50 @@
-import React from 'react';
-import { Form, Button } from 'react-bootstrap';
-import ThreeSixtyLogo from 'src/components/Logos/ThreeSixty';
-import { useTranslation } from 'src/hooks/useTranslation';
-import styles from './reset-password-form.module.scss';
+import React from "react";
+import { Form, Row } from "react-bootstrap";
+import styles from "./reset-password-form.module.css";
+import InputGroup from "../../../components/InputGroup";
+import Button from "../../../components/Button";
 
-const ForgotPasswordForm = ({ formik }) => {
-  const { t } = useTranslation();
-
+const ForgotPasswordForm = ({ formik, isLoading }) => {
   return (
     <Form className={styles.form} onSubmit={formik.handleSubmit}>
-      <Form.Group className={styles.logoContainer}>
-        <ThreeSixtyLogo />
-      </Form.Group>
-
       <Form.Group>
-        <Form.Label className={styles.header}>{t('Reset Password')}</Form.Label>
+        <Form.Label className={styles.header}>Reset Password</Form.Label>
 
-        <Form.Text className={styles.desc}>{t('Set a new password')}</Form.Text>
+        <Form.Text className={styles.desc}>Set a new password</Form.Text>
       </Form.Group>
 
-      <Form.Group className={styles.hidden}>
-        <Form.Label>{t('Email')}</Form.Label>
-        <Form.Control
-          type="email"
+      <Row>
+        <InputGroup
+          xs={12}
+          type="Text"
           name="email"
-          value={formik.values.email}
           autoComplete="user-name"
-          onChange={formik.handleChange}
-          isInvalid={!!formik.errors.email}
+          label="Email"
+          formik={formik}
+          style={{ display: "none" }}
         />
-        <Form.Control.Feedback type="invalid">
-          {t(formik.errors.email)}
-        </Form.Control.Feedback>
-      </Form.Group>
 
-      <Form.Group className={styles.hidden}>
-        <Form.Label>{t('Code')}</Form.Label>
-        <Form.Control
-          type="text"
-          name="code"
-          value={formik.values.code}
-          onChange={formik.handleChange}
-          isInvalid={!!formik.errors.code}
-        />
-        <Form.Control.Feedback type="invalid">
-          {t(formik.errors.code)}
-        </Form.Control.Feedback>
-      </Form.Group>
-
-      <Form.Group>
-        <Form.Label>{t('Password')}</Form.Label>
-        <Form.Control
-          type="password"
+        <InputGroup
+          xs={12}
+          type="Password"
           name="password"
           autoComplete="new-password"
-          onChange={formik.handleChange}
-          isInvalid={!!formik.errors.password}
+          label="Password"
+          formik={formik}
         />
-        <Form.Control.Feedback type="invalid">
-          {t(formik.errors.password)}
-        </Form.Control.Feedback>
-      </Form.Group>
 
-      <Form.Group>
-        <Form.Label>{t('Repeat Password')}</Form.Label>
-        <Form.Control
-          type="password"
+        <InputGroup
+          xs={12}
+          type="Password"
           name="confirm_password"
           autoComplete="new-password"
-          onChange={formik.handleChange}
-          isInvalid={!!formik.errors.confirm_password}
+          label="Repeat password"
+          formik={formik}
         />
-        <Form.Control.Feedback type="invalid">
-          {t(formik.errors.confirm_password)}
-        </Form.Control.Feedback>
-      </Form.Group>
+      </Row>
 
-      <Button variant="primary" type="submit">
-        {t('Reset')}
+      <Button variant="primary" type="submit" isLoading={isLoading}>
+        Reset
       </Button>
     </Form>
   );

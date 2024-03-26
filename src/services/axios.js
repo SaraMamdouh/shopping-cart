@@ -1,16 +1,11 @@
 import axios from "axios";
 import Cookies from "js-cookie";
 import { goToLogin } from "../navigation";
-import SCREENS from "../navigation/constants";
+import  { IDENTITY as IDENTITY_ROUTES } from "../navigation/constants";
 
 const axiosInstance = axios.create();
 
-const urlExceptions = [
-  SCREENS.LOGIN,
-  SCREENS.LOGOUT,
-  SCREENS.SIGN_UP,
-  SCREENS.FORGET_PASSWORD,
-];
+const urlExceptions =Object.values(IDENTITY_ROUTES);
 
 const configAccessToken = (config, resolve, accessToken) => {
   config.headers.Authorization = "Bearer " + accessToken;

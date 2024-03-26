@@ -5,7 +5,7 @@ import validationSchema from "./components/forgot-password.schema";
 import { useMutation } from "../../services/queries/useMutation";
 import toaster from "../../toaster";
 import { useNavigate } from "react-router-dom";
-import { ForgetPaswwordApi } from "../../services/api/auth";
+import { ForgetPaswordApi } from "../../services/api/auth";
 import SCREENS from "../../navigation/constants";
 
 const initialValues = {
@@ -14,7 +14,7 @@ const initialValues = {
 
 const ForgetPaswword = () => {
   const navigate = useNavigate();
-  const { mutate, isMutating } = useMutation(ForgetPaswwordApi, {
+  const { mutate:onSubmit, isMutating } = useMutation(ForgetPaswordApi, {
     onSuccess: () => {
       navigate(SCREENS.FORGET_PASSWORD_SUCCESS);
     },
@@ -22,7 +22,7 @@ const ForgetPaswword = () => {
   });
 
   const formik = useFormik({
-    onSubmit: (values) => mutate(values),
+    onSubmit,
     validateOnChange: false,
     initialValues,
     validationSchema,

@@ -16,7 +16,6 @@ import Filter from "../../components/filter/filter";
 import { Col, Container, Row } from "react-bootstrap";
 import { FaCartShopping } from "react-icons/fa6";
 import { listProductsApi, listShopsApi } from "../../services/api/products";
-import { listCartApi } from "../../services/api/cart";
 import withLayout from "../../components/Layout";
 import { useCallback, useEffect } from "react";
 import LazyScroll from "../../components/LazyScroll";
@@ -126,6 +125,7 @@ function Products({
     if (isFilterChanged) {
       mutate(filters);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isFilterChanged]);
 
   return isMutating ? (

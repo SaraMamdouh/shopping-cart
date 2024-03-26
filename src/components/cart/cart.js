@@ -1,4 +1,3 @@
-import React, { useEffect } from "react";
 import { useQuery } from "../../services/queries/useQuery"
 import { connect } from "react-redux";
 import {
@@ -19,14 +18,7 @@ const Cart = ({
   showCart,
   ShowCheck,
 }) => {
-  const handleUpdateCount = ({ id, quantity, price }) => {
-    increaseProductCount(id, quantity);
-    increaseCartQuantity(id, quantity, price);
-  };
-  const handleDecreaseCount = ({ id, quantity, price }) => {
-    decreaseCartQuantity(id, quantity, price);
-    decreaseProductCount(id, quantity);
-  };
+ 
   const { data: listCartsQuery } = useQuery(listCartApi);
   return (
     <section className="cart">

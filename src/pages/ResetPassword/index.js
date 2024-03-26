@@ -1,30 +1,28 @@
-import { useCallback, useEffect } from 'react';
-import { Container, Row, Col } from 'react-bootstrap';
-import { useFormik } from 'formik';
-import { useDispatch, useSelector } from 'react-redux';
-import ForgotPasswordForm from './components/reset-password-form';
-import styles from './index.module.scss';
-import validationSchema from './components/reset-password.schema';
-import { Creators as AuthCreators } from 'src/services/store/auth/actions';
+import { useEffect } from "react";
+import { useFormik } from "formik";
+import ForgotPasswordForm from "./components/reset-password-form";
+import validationSchema from "./components/reset-password.schema";
+import { useMutation } from "../../services/queries/useMutation";
+import { useNavigate } from "react-router-dom";
+import toaster from "../../toaster";
+import { resetPaswordApi } from "../../services/api/auth";
 
 const initialValues = {
-  email: '',
-  code: '',
-  password: '',
-  confirm_password: '',
+  email: "",
+  code: "",
+  password: "",
+  confirm_password: "",
 };
 
-export const Screen = () => {
-  const dispatch = useDispatch();
-  const isLoading = useSelector((state) => state.auth.isLoading);
+export const ResetPassword = () => {
+  const navigate = useNavigate();
 
-  const onSubmit = useCallback(
-    (values) => {
-      dispatch(AuthCreators.resetPasswordRequest(values));
+  const { mutate: onSubmit, isMutating } = useMutation(resetPaswordApi, {
+    onSuccess: () => {
+      navigate("/");
     },
-    [dispatch]
-  );
-
+    onError: (error) => toaster.error(error),
+  });
   const formik = useFormik({
     onSubmit,
     validateOnChange: false,
@@ -36,27 +34,14 @@ export const Screen = () => {
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
-    const email = urlParams.get('email');
+    const email = urlParams.get("email");
 
     if (email) {
-      setFieldValue('email', email);
-    }
-
-    const code = urlParams.get('token');
-    if (code) {
-      setFieldValue('code', code);
+      setFieldValue("email", email);
     }
   }, [setFieldValue]);
 
-  return (
-    <Container className={styles.container} fluid>
-      <Row className="justify-content-md-center">
-        <Col xs md="4" lg="3">
-          <ForgotPasswordForm formik={formik} isLoading={isLoading} />
-        </Col>
-      </Row>
-    </Container>
-  );
+  return <ForgotPasswordForm formik={formik} isLoading={isMutating} />;
 };
 
-export default Screen;
+export default ResetPassword;

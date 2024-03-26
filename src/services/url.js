@@ -10,3 +10,4 @@ export const DELETE_FROM_CART = `${BASE_URL}/cart/delete-from-cart`;
 export const PLACE_ORDER = `${BASE_URL}/orders/place-order`;
 export const ALL_ORDERS = `${BASE_URL}/orders`;
 export const FORGET_PASSWORD_URL = `${BASE_URL}/auth/password/forget`;
+export const RESET_PASSWORD_URL = `${BASE_URL}/auth/password/reset`;
