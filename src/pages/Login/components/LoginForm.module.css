@@ -61,7 +61,13 @@
 
     a {
       text-decoration: underline;
-      color: var(--base-800);
     }
   }
+}
+
+.forgetPassword {
+  display: block;
+  text-align: right;
+  margin-right: 15px;
+  font-size: 14px;
 }

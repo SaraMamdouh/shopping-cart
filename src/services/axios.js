@@ -5,7 +5,12 @@ import SCREENS from "../navigation/constants";
 
 const axiosInstance = axios.create();
 
-const urlExceptions = [SCREENS.LOGIN, SCREENS.LOGOUT, SCREENS.SIGN_UP];
+const urlExceptions = [
+  SCREENS.LOGIN,
+  SCREENS.LOGOUT,
+  SCREENS.SIGN_UP,
+  SCREENS.FORGET_PASSWORD,
+];
 
 const configAccessToken = (config, resolve, accessToken) => {
   config.headers.Authorization = "Bearer " + accessToken;

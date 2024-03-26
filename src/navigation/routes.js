@@ -4,6 +4,7 @@ import Login from "../pages/Login";
 import Signup from "../pages/Signup";
 import Logout from "../pages/Logout";
 import SCREENS from "./constants";
+import ForgetPaswword from "../pages/ForgotPassword";
 
 export const router = createBrowserRouter([
   {
@@ -25,5 +26,9 @@ export const router = createBrowserRouter([
   {
     path: SCREENS.PRODUCTS,
     element: <Products />,
+  },
+  {
+    path: SCREENS.FORGET_PASSWORD,
+    element: <ForgetPaswword />,
   },
 ]);
