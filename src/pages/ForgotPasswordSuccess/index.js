@@ -1,29 +1,31 @@
-import React from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
-import ThreeSixtyLogo from 'src/components/Logos/ThreeSixty';
-import { useTranslation } from 'src/hooks/useTranslation';
-import styles from './index.module.scss';
+import styles from './index.module.css';
 import { PiWarningOctagonDuotone } from 'react-icons/pi';
+import logo from "../../logo-default-231x49.png";
 
-export const Screen = () => {
-  const { t } = useTranslation();
+export const ForgetPasswordSuccess = () => {
 
   return (
     <Container className={styles.container} fluid data-testid="forgot-password">
       <Row className="justify-content-md-center">
-        <Col xs md="4" lg="3">
+        <Col md={4}>    
           <Row className={styles.segment} data-testid="check-your-email">
-            <ThreeSixtyLogo />
-            <p>{t('Please check your email for a reset password link')}.</p>
+            <Col xs={12} className='text-center'>
+          <img
+            alt=""
+            src={logo}
+            width="30"
+            height="30"
+            className="d-inline-block align-top"
+          />
+    <p >Please check your email for a reset password link.</p>
+          </Col>
             <p className={styles.confirmation}>
               <PiWarningOctagonDuotone
                 style={{ fontSize: '1rem' }}
                 className="mb-1 mr-1"
               />
-              {t(
-                "If you haven't received your email yet, please check your spam folder"
-              )}
-              .
+                If you haven't received your email yet, please check your spam folder.
             </p>
           </Row>
         </Col>
@@ -32,4 +34,4 @@ export const Screen = () => {
   );
 };
 
-export default Screen;
+export default ForgetPasswordSuccess;

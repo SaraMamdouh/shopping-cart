@@ -6,6 +6,7 @@ import { useMutation } from "../../services/queries/useMutation";
 import toaster from "../../toaster";
 import { useNavigate } from "react-router-dom";
 import { ForgetPaswwordApi } from "../../services/api/auth";
+import SCREENS from "../../navigation/constants";
 
 const initialValues = {
   email: "",
@@ -15,7 +16,7 @@ const ForgetPaswword = () => {
   const navigate = useNavigate();
   const { mutate, isMutating } = useMutation(ForgetPaswwordApi, {
     onSuccess: () => {
-      navigate("/");
+      navigate(SCREENS.FORGET_PASSWORD_SUCCESS);
     },
     onError: (error) => toaster.error(error),
   });

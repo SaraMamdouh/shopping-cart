@@ -10,7 +10,6 @@ export const loginApi = async (payload) => {
 };
 
 export const ForgetPaswwordApi = async (email) => {
-  console.log("email", email);
   return request.post(FORGET_PASSWORD_URL, {
     data: email,
   });
