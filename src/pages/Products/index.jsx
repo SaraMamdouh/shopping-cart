@@ -28,17 +28,17 @@ const Product = ({
   handleUpdateCount,
   handleAddToCart,
 }) => {
-  const { _id: id, quantity, price, image, name, description } = product || {};
+  let { _id: id, quantity, price, image, name, description } = product || {};
   return (
     <Col md={4} xs={12} className="mb-5" key={id}>
       <div className={styles?.product}>
         <div className={styles?.image}>
-          <img src={process.env.PUBLIC_URL + image} alt="product" />
+          <img src={image} alt="product" />
         </div>
         <div className={styles?.content}>
           <h5>{name}</h5>
           <p>{description} </p>
-          <p className={styles?.price}>{"$ " + price + ".00"} </p>
+          <p className={styles?.price}>{"₹" + price + ".00"} </p>
         </div>
         <div className={styles?.cart}>
           {quantity !== 0 ? (
@@ -54,7 +54,7 @@ const Product = ({
               <button
                 type="button"
                 className={styles.cartButton}
-                onClick={() => handleUpdateCount({ id, quantity, price })}
+                onClick={() => handleUpdateCount(product, quantity)}
               >
                 +
               </button>
@@ -89,9 +89,10 @@ function Products({
     increaseProductCount(_id, quantity, price);
     addToCart(product, price);
   };
-  const handleUpdateCount = ({ id, quantity, price }) => {
-    increaseProductCount(id, quantity);
-    increaseCartQuantity(id, quantity, price);
+  const handleUpdateCount = (product, quantity) => {
+    increaseProductCount(product._id, quantity);
+    increaseCartQuantity(product._id, quantity, product.price);
+    addToCart(product);
   };
   const handleDecreaseCount = ({ id, quantity, price }) => {
     decreaseCartQuantity(id, quantity, price);
@@ -102,10 +103,10 @@ function Products({
     onSuccess: ({ data }) => {
       dispatch(fetchDataSuccess(data?.products));
       dispatch(setIsFiltersChanged());
-      const productsAddedToCart = data?.products?.filter(
-        (product) => product?.quantity > 0
-      );
-      productsAddedToCart?.map((product) => addToCart(product, product.price));
+      // const productsAddedToCart = data?.products?.filter(
+      //   (product) => product?.quantity > 0
+      // );
+      // productsAddedToCart?.map((product) => addToCart(product, product.price));
     },
     onError: (error) => {
       dispatch(fetchDataFailure(error?.message));
@@ -115,6 +116,7 @@ function Products({
 
   const { data: listshopsQuery } = useQuery(listShopsApi);
 
+
   const handleScroll = useCallback(() => {
     mutate({ ...filters, page: filters?.page + 1 });
   }, [mutate, filters]);
@@ -123,7 +125,7 @@ function Products({
     if (isFilterChanged) {
       mutate(filters);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isFilterChanged]);
 
   return isMutating ? (
@@ -139,13 +141,7 @@ function Products({
           <LazyScroll onWindowScrollReachEnd={handleScroll}>
             <Col xs={9} className="p-0">
               <h5 className={styles.header}>#TREND NOW</h5>
-              <p>
-                Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque
-                non nulla nulla, nec tincidunt risus morbi ultricies est ditae
-                odio ultrices imperdiet. Cras accumsan dorci maces consequat
-                blandi susto dusto elementum libero non honcus purus sem sit
-                amet enimos.{" "}
-              </p>
+
               <Row>
                 {products?.map((product) => {
                   return (

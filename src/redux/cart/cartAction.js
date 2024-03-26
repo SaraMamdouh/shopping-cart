@@ -6,23 +6,38 @@ import {
   SHOW_CART,
   SHOW_CHECKOUT,
 } from "./cartType";
+import { addToCartApi, deleteFromCartApi } from "../../services/api/cart";
 
-export const addToCart = (product, price) => {
-  return {
-    type: ADD_CART,
-    payload: product,
-    price: price,
+export const addToCart = (product) => {
+  return async (dispatch) => {
+    try {
+      const response = await addToCartApi(product);
+      dispatch({
+        type: ADD_CART,
+        payload: response.data,
+      });
+    } catch (error) {
+      console.error("Error adding product to cart:", error);
+    }
   };
 };
+
 export const removeFromCart = (productId) => {
-  return {
-    type: REMOVE_CART,
-    payload: {
-      productId: productId,
-    },
+  return async (dispatch) => {
+    try {
+      const response = await deleteFromCartApi({ "_id": productId });
+      dispatch({
+        type: REMOVE_CART,
+        payload: response.data,
+      });
+    } catch (error) {
+      console.error("Error adding product to cart:", error);
+    }
   };
 };
 export const increaseCartQuantity = (id, quantity, price) => {
+  console.log("increaseCartQuantity");
+  console.log(increaseCartQuantity);
   return {
     type: INCREASE_CART,
     id,
@@ -58,11 +73,15 @@ export const ShowCheck = () => {
 };
 
 export const RemoveCart = (id, quantity, price) => {
-  return (dispatch) => {
-    if (quantity > 1) {
-      dispatch(decreaseCartQuantity(id, quantity, price));
-    } else {
-      dispatch(removeCart(id, quantity, price));
+  return async (dispatch) => {
+    try {
+      const response = await deleteFromCartApi(id);
+      dispatch({
+        type: REMOVE_CART,
+        payload: response.data,
+      });
+    } catch (error) {
+      console.error("Error adding product to cart:", error);
     }
   };
 };

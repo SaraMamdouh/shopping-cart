@@ -14,6 +14,8 @@ const initialState = {
   showCheck: false,
 };
 const cartReducer = (state = initialState, action) => {
+  console.log(state)
+  console.log(action)
   switch (action.type) {
     case SHOW_CART:
       return {

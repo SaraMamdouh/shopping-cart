@@ -5,6 +5,7 @@ const initialState = {
     searchText: "",
     category: "",
     shopId: "",
+    Nearby: false,
     page: 1,
   },
   isFilterChanged: true,

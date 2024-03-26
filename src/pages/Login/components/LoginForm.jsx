@@ -3,6 +3,7 @@ import InputGroup from "../../../components/InputGroup";
 import { Col, Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Button from "../../../components/Button";
+import SCREENS from "../../../navigation/constants";
 
 const LoginForm = ({ isLoading, formik, isSubmitting }) => {
   const { handleSubmit, handleChange, values } = formik || {};
@@ -44,6 +45,13 @@ const LoginForm = ({ isLoading, formik, isSubmitting }) => {
           testId="password"
           required
         />
+        <Link
+          to={SCREENS.FORGET_PASSWORD}
+          className={styles.forgetPassword}
+          data-testid="forgot-password"
+        >
+          Forgot password?
+        </Link>
 
         <Form.Group as={Col} className="mt-4">
           {" "}
@@ -59,7 +67,7 @@ const LoginForm = ({ isLoading, formik, isSubmitting }) => {
 
         <Form.Group className={styles.signUpGroup} data-testid="signup">
           <Form.Label>Don't have an account?</Form.Label>
-          <Link to="/signup">Sign up</Link>
+          <Link to={SCREENS.SIGN_UP}>Sign up</Link>
         </Form.Group>
       </fieldset>
     </Form>

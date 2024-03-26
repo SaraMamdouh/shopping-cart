@@ -26,13 +26,19 @@ const getCurrentPosition = async () => {
 };
 
 export const listProductsApi = async (payload) => {
-  // const currentLocation = await getCurrentPosition();
-  const values = {
-    // ...currentLocation,
+
+  let values = {
     ...payload,
     limit: 10,
   };
 
+  if (payload?.Nearby && payload.category === "" && payload.searchText === "" && payload.shopId === "") {
+    const currentLocation = await getCurrentPosition();
+    values = {
+      ...values,
+      ...currentLocation
+    }
+  }
   return request.post(LIST_PRODUCTS, values);
 };
 

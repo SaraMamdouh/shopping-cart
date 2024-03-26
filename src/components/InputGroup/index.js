@@ -36,13 +36,7 @@ export default function InputGroup({
   const error = getIn(formik.errors, name);
 
   return (
-    <Form.Group
-      data-testid={testId ? testId : label?.toLowerCase().split(" ").join("-")}
-      as={Col}
-      xs={xs}
-      className={styles.group}
-      style={style}
-    >
+    <Form.Group as={Col} xs={xs} className={styles.group} style={style}>
       {label && hasLabel && (
         <Form.Label className={styles.label} data-testid="label">
           {label}
