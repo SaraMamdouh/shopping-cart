@@ -31,6 +31,18 @@ const Filter = ({ filters, filterItem, shops }) => {
       </ul>
       <ul className="filter-list">
         <h5>SHOPS</h5>
+        <li
+          key="Nearby Shops"
+          className={
+            filters?.Nearby === true
+              ? "filter-link active"
+              : "filter-link"
+          }
+          onClick={() => filterItem({ Nearby: true })}
+        >
+          Nearby Shops
+        </li>
+
         {shops?.map((shop, index) => (
           <li
             key={index}

@@ -1,4 +1,4 @@
-import React from "react";
+import { useQuery } from "../../services/queries/useQuery"
 import { connect } from "react-redux";
 import {
   RemoveCart,
@@ -6,6 +6,7 @@ import {
   showCart,
   ShowCheck,
 } from "../../redux/cart/cartAction";
+import { listCartApi } from "../../services/api/cart";
 import "./style.css";
 import { DecreseCount, IncreaseCount } from "../../redux/product/productAction";
 
@@ -15,25 +16,17 @@ const Cart = ({
   decreaseCartQuantity,
   decreaseProductCount,
   showCart,
-  cart,
   ShowCheck,
-  total,
 }) => {
-  const handleUpdateCount = ({ id, quantity, price }) => {
-    increaseProductCount(id, quantity);
-    increaseCartQuantity(id, quantity, price);
-  };
-  const handleDecreaseCount = ({ id, quantity, price }) => {
-    decreaseCartQuantity(id, quantity, price);
-    decreaseProductCount(id, quantity);
-  };
+ 
+  const { data: listCartsQuery } = useQuery(listCartApi);
   return (
     <section className="cart">
       <div className="pop-up">
-        <div className="cross-icon">
-          <i className="fas fa-times" onClick={showCart}></i>
-        </div>
         <div className="cart-content">
+          <div className="cross-icon">
+            <i className="fas fa-times" onClick={showCart}></i>
+          </div>
           <div className="container">
             <table>
               <thead>
@@ -44,45 +37,21 @@ const Cart = ({
                 </tr>
               </thead>
               <tbody>
-                {cart.map((m) => {
+                {listCartsQuery != null && listCartsQuery?.cart?.items?.map((m) => {
                   return (
                     <tr>
                       <td>
                         <div className="cart-body">
                           <div className="cart-image">
-                            <img src={m.image} alt="cart" />
+                            <img src={m.product.image} alt="cart" />
                           </div>
-                          <h4>{m.name}</h4>
+                          <h4>{m.product.name}</h4>
                         </div>
                       </td>
-                      <td> {"$ " + m.price + ".00"}</td>
+                      <td> {"₹ " + m.product.price + ".00"}</td>
                       <td>
                         <div className="cart-quantity">
-                          <button
-                            className="quantity-button"
-                            onClick={() =>
-                              handleDecreaseCount({
-                                id: m._id,
-                                quantity: m.quantity,
-                                price: m.price,
-                              })
-                            }
-                          >
-                            -
-                          </button>
                           <span className="quantity">{m.quantity}</span>
-                          <button
-                            className="quantity-button"
-                            onClick={() =>
-                              handleUpdateCount({
-                                id: m._id,
-                                quantity: m.quantity,
-                                price: m.price,
-                              })
-                            }
-                          >
-                            +
-                          </button>
                         </div>
                       </td>
                     </tr>
@@ -92,7 +61,7 @@ const Cart = ({
             </table>
             <div className="check-out">
               <span className="total-span">total: </span>
-              <span className="price-span">{"$" + total + ".00"}</span>
+              <span className="price-span">{"₹" + listCartsQuery?.totalPrice + ".00"}</span>
               <button
                 className="cart-button check-out-button "
                 onClick={ShowCheck}
