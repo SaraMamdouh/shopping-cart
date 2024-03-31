@@ -43,7 +43,7 @@ export const listProductsApi = async (payload) => {
       ...currentLocation,
     };
   }
-  return fetch("https://fakestoreapi.com/products").then((res) => res.json());
+  return request.post(LIST_PRODUCTS, values);
 };
 
 export const listShopsApi = async () => {
