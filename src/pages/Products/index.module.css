@@ -106,6 +106,44 @@
   outline: none;
 }
 
-.header {
+.filterContainer {
+  display: grid;
+  grid-template-columns: 95% 5%;
+  margin-bottom: 1rem;
+  align-items: baseline;
+}
+.filterContainer .header {
   font-weight: 700;
+}
+
+.filterContainer .filterIcon {
+  float: right;
+  width: max-content;
+  background-color: #e5e5e5;
+  border-color: #e5e5e5;
+  color: #121212;
+  display: none;
+}
+.sideBarBackground {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0;
+  z-index: -1;
+  display: none;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  background-color: rgba(0, 0, 0, 0.6);
+  opacity: 1;
+  visibility: visible;
+  display: block;
+  z-index: 101;
+}
+
+@media (max-width: 767.98px) {
+  .filterContainer .filterIcon {
+    display: block;
+  }
 }

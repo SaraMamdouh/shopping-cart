@@ -1,31 +1,20 @@
-import { useQuery } from "../../services/queries/useQuery"
+import { useQuery } from "../../services/queries/useQuery";
 import { connect } from "react-redux";
-import {
-  RemoveCart,
-  increaseCartQuantity,
-  showCart,
-  ShowCheck,
-} from "../../redux/cart/cartAction";
+import { showCart, ShowCheck } from "../../redux/cart/cartAction";
 import { listCartApi } from "../../services/api/cart";
-import "./style.css";
-import { DecreseCount, IncreaseCount } from "../../redux/product/productAction";
+import { IoMdClose } from "react-icons/io";
 
-const Cart = ({
-  increaseProductCount,
-  increaseCartQuantity,
-  decreaseCartQuantity,
-  decreaseProductCount,
-  showCart,
-  ShowCheck,
-}) => {
- 
+import "./style.css";
+import Button from "../Button";
+
+const Cart = ({ showCart, ShowCheck }) => {
   const { data: listCartsQuery } = useQuery(listCartApi);
   return (
     <section className="cart">
       <div className="pop-up">
         <div className="cart-content">
-          <div className="cross-icon">
-            <i className="fas fa-times" onClick={showCart}></i>
+          <div className="d-block text-right mb-3 mr-2">
+            <IoMdClose onClick={showCart} style={{ cursor: "pointer" }} />
           </div>
           <div className="container">
             <table>
@@ -37,37 +26,44 @@ const Cart = ({
                 </tr>
               </thead>
               <tbody>
-                {listCartsQuery != null && listCartsQuery?.cart?.items?.map((m) => {
-                  return (
-                    <tr>
-                      <td>
-                        <div className="cart-body">
-                          <div className="cart-image">
-                            <img src={m.product.image} alt="cart" />
+                {listCartsQuery != null &&
+                  listCartsQuery?.cart?.items?.map((m) => {
+                    return (
+                      <tr>
+                        <td>
+                          <div className="cart-body">
+                            <div className="cart-image">
+                              <img src={m.product.image} alt="cart" />
+                            </div>
+                            <h4>{m.product.name}</h4>
                           </div>
-                          <h4>{m.product.name}</h4>
-                        </div>
-                      </td>
-                      <td> {"₹ " + m.product.price + ".00"}</td>
-                      <td>
-                        <div className="cart-quantity">
-                          <span className="quantity">{m.quantity}</span>
-                        </div>
-                      </td>
-                    </tr>
-                  );
-                })}
+                        </td>
+                        <td> {"₹ " + m.product.price + ".00"}</td>
+                        <td>
+                          <div className="cart-quantity">
+                            <span className="quantity">{m.quantity}</span>
+                          </div>
+                        </td>
+                      </tr>
+                    );
+                  })}
               </tbody>
             </table>
             <div className="check-out">
-              <span className="total-span">total: </span>
-              <span className="price-span">{"₹" + listCartsQuery?.totalPrice + ".00"}</span>
-              <button
-                className="cart-button check-out-button "
-                onClick={ShowCheck}
-              >
-                proceed to checkout
-              </button>
+              <div className="text-left">
+                <span className="total-span">total: </span>
+                <span className="price-span">
+                  {`₹${listCartsQuery?.totalPrice ?? 0}.00`}
+                </span>
+              </div>
+              <div className="text-right">
+                <Button
+                  className="cart-button check-out-button "
+                  onClick={ShowCheck}
+                >
+                  proceed to checkout
+                </Button>
+              </div>
             </div>
           </div>
         </div>
@@ -84,14 +80,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    increaseCartQuantity: (id, quantity, price) =>
-      dispatch(increaseCartQuantity(id, quantity, price)),
-    decreaseCartQuantity: (id, quantity, price) =>
-      dispatch(RemoveCart(id, quantity, price)),
-    increaseProductCount: (id, quantity) =>
-      dispatch(IncreaseCount(id, quantity)),
-    decreaseProductCount: (id, quantity) =>
-      dispatch(DecreseCount(id, quantity)),
     showCart: () => dispatch(showCart()),
     ShowCheck: () => dispatch(ShowCheck()),
   };
