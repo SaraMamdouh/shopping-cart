@@ -120,7 +120,8 @@ table tbody td {
   color: white;
   outline: none;
   z-index: 1;
-  padding: 15px 20px;
+  padding: 15px 20px !important;
+  box-shadow: none !important;
 }
 .cart-button:hover,
 .cart-button:active {
