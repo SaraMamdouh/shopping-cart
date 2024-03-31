@@ -103,8 +103,8 @@ function Products({
   };
 
   const { isMutating, mutate } = useMutation(listProductsApi, {
-    onSuccess: (data) => {
-      dispatch(fetchDataSuccess(data));
+    onSuccess: ({ data }) => {
+      dispatch(fetchDataSuccess(data?.products));
       dispatch(setIsFiltersChanged());
       // const productsAddedToCart = data?.products?.filter(
       //   (product) => product?.quantity > 0
