@@ -13,14 +13,15 @@ import {
   RemoveCart,
 } from "../../redux/cart/cartAction";
 import Filter from "../../components/filter/filter";
-import { Col, Container, Row } from "react-bootstrap";
+import { Button, Col, Container, Row } from "react-bootstrap";
 import { FaCartShopping } from "react-icons/fa6";
 import { listProductsApi, listShopsApi } from "../../services/api/products";
 import withLayout from "../../components/Layout";
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import LazyScroll from "../../components/LazyScroll";
 import { useMutation } from "../../services/queries/useMutation";
 import { useQuery } from "../../services/queries/useQuery";
+import { PiSliders } from "react-icons/pi";
 
 const Product = ({
   product,
@@ -30,7 +31,7 @@ const Product = ({
 }) => {
   let { _id: id, quantity, price, image, name, description } = product || {};
   return (
-    <Col md={4} xs={12} className="mb-5" key={id}>
+    <Col md={6} xs={12} lg={4} className="mb-5" key={id}>
       <div className={styles?.product}>
         <div className={styles?.image}>
           <img src={image} alt="product" />
@@ -83,7 +84,9 @@ function Products({
   isFilterChanged,
   products,
 }) {
+  const [isSideBarShown, setIsSideBarShown] = useState(false);
   const dispatch = useDispatch();
+
   const handleAddToCart = (product) => {
     const { _id, quantity, price } = product;
     increaseProductCount(_id, quantity, price);
@@ -100,8 +103,8 @@ function Products({
   };
 
   const { isMutating, mutate } = useMutation(listProductsApi, {
-    onSuccess: ({ data }) => {
-      dispatch(fetchDataSuccess(data?.products));
+    onSuccess: (data) => {
+      dispatch(fetchDataSuccess(data));
       dispatch(setIsFiltersChanged());
       // const productsAddedToCart = data?.products?.filter(
       //   (product) => product?.quantity > 0
@@ -116,7 +119,6 @@ function Products({
 
   const { data: listshopsQuery } = useQuery(listShopsApi);
 
-
   const handleScroll = useCallback(() => {
     mutate({ ...filters, page: filters?.page + 1 });
   }, [mutate, filters]);
@@ -125,22 +127,36 @@ function Products({
     if (isFilterChanged) {
       mutate(filters);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isFilterChanged]);
 
   return isMutating ? (
     <h2>Loading...</h2>
   ) : (
-    <Container className="ml-0">
+    <Container fluid className="pl-5 pr-5">
       <Row>
-        <Col xs={3}>
-          <Filter shops={listshopsQuery?.shop} />
-        </Col>
+        <Filter
+          shops={listshopsQuery?.shop}
+          onClose={() => setIsSideBarShown(false)}
+          isSideBarShown={isSideBarShown}
+        />
 
         {products?.length > 0 ? (
           <LazyScroll onWindowScrollReachEnd={handleScroll}>
-            <Col xs={9} className="p-0">
-              <h5 className={styles.header}>#TREND NOW</h5>
+            <Col xs={12} md={9} className="pt-1">
+              <Row>
+                <Col xs={12} className={styles.filterContainer}>
+                  <h5 className={styles.header}>#TREND NOW</h5>
+
+                  <Button
+                    variant="secondary"
+                    className={styles.filterIcon}
+                    onClick={() => setIsSideBarShown(true)}
+                  >
+                    <PiSliders style={{ fontSize: "1.5rem" }} />
+                  </Button>
+                </Col>
+              </Row>
 
               <Row>
                 {products?.map((product) => {
@@ -165,6 +181,7 @@ function Products({
           </Col>
         )}
       </Row>
+      {isSideBarShown && <div className={styles.sideBarBackground}></div>}
     </Container>
   );
 }

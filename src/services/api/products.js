@@ -26,20 +26,24 @@ const getCurrentPosition = async () => {
 };
 
 export const listProductsApi = async (payload) => {
-
   let values = {
     ...payload,
     limit: 10,
   };
 
-  if (payload?.Nearby && payload.category === "" && payload.searchText === "" && payload.shopId === "") {
+  if (
+    payload?.Nearby &&
+    payload.category === "" &&
+    payload.searchText === "" &&
+    payload.shopId === ""
+  ) {
     const currentLocation = await getCurrentPosition();
     values = {
       ...values,
-      ...currentLocation
-    }
+      ...currentLocation,
+    };
   }
-  return request.post(LIST_PRODUCTS, values);
+  return fetch("https://fakestoreapi.com/products").then((res) => res.json());
 };
 
 export const listShopsApi = async () => {
